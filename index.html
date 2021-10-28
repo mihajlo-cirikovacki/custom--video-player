@@ -17,7 +17,7 @@
 <body>
 <section class="section-video-player">
   <div class="video-container">
-    <video src="" poster="" class="video"><p>This browser don't support video.</p></video>
+    <video src="/video_clips/clip1.mp4" poster="" class="video"><p>This browser don't support video.</p></video>
     <input type="range" min="0" max="100" step="0.1" value="0" class="progress-bar">
     <div class="controls">
       <div class="controls__buttons-box">
@@ -31,7 +31,7 @@
           <button class="btn controls__volume">
             <ion-icon name="volume-high"></ion-icon>
           </button>
-          <input type="range" min="0" max="100" step="1" class=" controls__volume-input" >
+            <input type="range" min="0" max="100" step="1" class="controls__volume-input" >
         </div>
       </div>
       <div class="time">
@@ -42,7 +42,9 @@
         <div class="time__timestamp">00:00</div>
         <span>/</span>
         <div class="time__timestamp--full">00:00</div>
-        <ion-icon name="expand"></ion-icon>
+        <button class="btn controls__full-screen">
+          <ion-icon name="expand"></ion-icon>
+        </button>
       </div>
     </div>
   </div>
