@@ -31,13 +31,20 @@
           <button class="btn controls__volume">
             <ion-icon name="volume-high"></ion-icon>
           </button>
-            <input type="range" min="0" max="100" step="1" class="controls__volume-input" >
+          <input type="range" min="0" max="1" step="0.01" value="1" class="controls__volume-input" >
         </div>
       </div>
       <div class="time">
         <div class="time-box">
-          <button class="btn time__speed">1.0</button>
+          <button class="btn time__speed-default">1.0</button>
           <span>x</span>
+          <div class="time-play-back-rates">
+            <button class="btn time__speed">0.5</button>
+            <button class="btn time__speed">0.75</button>
+            <button class="btn time__speed">1.0</button>
+            <button class="btn time__speed">1.5</button>
+            <button class="btn time__speed">2.0</button>
+          </div>
         </div>
         <div class="time__timestamp">00:00</div>
         <span>/</span>

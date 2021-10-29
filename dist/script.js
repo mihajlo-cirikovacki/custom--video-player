@@ -9,6 +9,7 @@ const timestampFullTime = document.querySelector('.time__timestamp--full');
 const volume = document.querySelector('.controls__volume');
 const volumeProgress = document.querySelector('.controls__volume-input');
 const fullScreen = document.querySelector('.controls__full-screen');
+const timeBox = document.querySelector('.time-box');
 
 // ================= FUNCTIONS:
 
@@ -28,8 +29,6 @@ const updatePlayIcon = function() {
 
 // Update progress & timestamp:
 const updateProgress = function() {
-  // console.log(video.currentTime); Sekunde koje su prosle
-  // console.log(video.duration); Ukupno trajanje
   progress.value = (video.currentTime / video.duration ) * 100;
 
   // Get min:
@@ -64,16 +63,6 @@ const stopVideo = function() {
   video.pause();
 }
 
-// Mute video:
-const muteVideo = function() {
-  // Check:
-  video.muted = !video.muted;
-  // Check and set icon:
-  if(video.muted) volume.innerHTML = '<ion-icon name="volume-mute"></ion-icon>';
-  else volume.innerHTML = '<ion-icon name="volume-high"></ion-icon>';
-}
-
-
 // ================= EVENT LISTENERS:
 // VIDEO:
 video.addEventListener('click', toggleVideoStatus);
@@ -84,11 +73,50 @@ video.addEventListener('timeupdate', updateProgress);
 play.addEventListener('click', toggleVideoStatus);
 stop.addEventListener('click', stopVideo);
 progress.addEventListener('click', setVideoProgress);
-volume.addEventListener('click', muteVideo);
+
+volume.addEventListener('click', (e) => {
+  // Check:
+  video.muted = !video.muted;
+  // Check and set icon:
+  if(video.muted) { 
+    volume.innerHTML = '<ion-icon name="volume-mute"></ion-icon>'; 
+    volumeProgress.value = '0';
+  }else {
+    volume.innerHTML = '<ion-icon name="volume-high"></ion-icon>';
+    volumeProgress.value = '100';
+  };
+});
 
 fullScreen.addEventListener('click', (e) => {
   video.requestFullscreen();
 })
+
+// Set volume:
+volumeProgress.addEventListener('mousemove', (e) => {
+  video.volume = e.target.value;
+  // Check value and change volume icon:
+  if(e.target.value === '0') volume.innerHTML = '<ion-icon name="volume-off"></ion-icon>';
+  
+  if(e.target.value >= '0.01' && e.target.value <= '0.49' ) volume.innerHTML = '<ion-icon name="volume-low"></ion-icon>';
+  if(e.target.value >= '0.50' && e.target.value <= '0.70' ) volume.innerHTML = '<ion-icon name="volume-medium"></ion-icon>';
+  if(e.target.value === '1' ) volume.innerHTML = '<ion-icon name="volume-high"></ion-icon>';
+})
+
+// Set playback rates:
+timeBox.addEventListener('click', (e) => {
+  const timeRatesBox = timeBox.querySelector('.time-play-back-rates');
+  if(timeRatesBox.style.display === 'none') timeRatesBox.style.display = "flex";
+    else  timeRatesBox.style.display = "none";
+
+  const timeSpeed = e.target.closest('.time__speed');
+  if(!timeSpeed) return;
+  // Set playback rate:
+  video.playbackRate = +timeSpeed.textContent;
+  const speed = timeBox.querySelector('.time__speed-default');
+  speed.textContent = timeSpeed.textContent;
+});
+
+
 
 
 
