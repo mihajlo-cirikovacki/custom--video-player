@@ -1,5 +1,6 @@
 'use strict';
 
+const videoContainer = document.querySelector('.video-container');
 const video = document.querySelector('.video');
 const play = document.querySelector('.controls__play');
 const stop = document.querySelector('.controls__stop');
@@ -88,7 +89,19 @@ volume.addEventListener('click', (e) => {
 });
 
 fullScreen.addEventListener('click', (e) => {
-  video.requestFullscreen();
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+    fullScreen.innerHTML = '<ion-icon name="expand"></ion-icon>';
+  } else if (document.webkitFullscreenElement) {
+    // Need this to support Safari
+    document.webkitExitFullscreen();
+  } else if (videoContainer.webkitRequestFullscreen) {
+    // Need this to support Safari
+    videoContainer.webkitRequestFullscreen();
+  } else {
+    videoContainer.requestFullscreen();
+    fullScreen.innerHTML = '<ion-icon name="contract"></ion-icon>';
+  }
 })
 
 // Set volume:
